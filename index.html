@@ -1,0 +1,483 @@
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroComunidade - Comércio Agrícola Sustentável</title>
+    <style>
+        /* --- PALETA DE CORES ---
+           Verde: #2e7d32
+           Azul: #1565c0
+           Dourado: #f9a825
+           Branco: #ffffff
+        ------------------------ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho e Navegação */
+        header {
+            background-color: #2e7d32; /* Verde */
+            color: #ffffff;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: #f9a825; /* Dourado */
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: #f9a825; /* Dourado */
+        }
+
+        /* Seções Principais */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: 70vh;
+        }
+
+        .page-section {
+            display: none; /* Escondido por padrão, controlado via JS */
+        }
+
+        .page-section.active-page {
+            display: block; /* Mostra apenas a página ativa */
+        }
+
+        /* Banner Home */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f9a825;
+        }
+
+        /* Vitrine de Produtos (Comércio) */
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card-produto {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 4px solid #1565c0; /* Azul */
+            transition: transform 0.3s;
+        }
+
+        .card-produto:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-produto img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-conteudo {
+            padding: 1.5rem;
+        }
+
+        .card-conteudo h3 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .preco {
+            color: #1565c0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .btn-comprar {
+            background-color: #f9a825;
+            color: #333;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-comprar:hover {
+            background-color: #e69516;
+        }
+
+        /* Formulários (Contatos e Usuário) */
+        .form-container {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #2e7d32;
+        }
+
+        .form-container h2 {
+            color: #2e7d32;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #1565c0;
+        }
+
+        .btn-enviar {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .btn-enviar:hover {
+            background-color: #0d47a1;
+        }
+
+        /* Widget do Chat da IA */
+        .ia-chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            border: 2px solid #2e7d32;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 2000;
+        }
+
+        .ia-header {
+            background: #2e7d32;
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ia-header span {
+            font-size: 0.8rem;
+            background: #f9a825;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .ia-messages {
+            height: 250px;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .msg {
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            max-width: 80%;
+            font-size: 0.9rem;
+        }
+
+        .msg.ia {
+            background: #e8f5e9;
+            color: #2e7d32;
+            align-self: flex-start;
+        }
+
+        .msg.user {
+            background: #e3f2fd;
+            color: #1565c0;
+            align-self: flex-end;
+        }
+
+        .ia-input-area {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+
+        .ia-input-area input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            outline: none;
+        }
+
+        .ia-input-area button {
+            background: #f9a825;
+            border: none;
+            padding: 0 1rem;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-top: 5px solid #f9a825;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Agro<span>Comércio</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a onclick="mudarPagina('home')" id="nav-home" class="active">Início</a></li>
+                    <li><a onclick="mudarPagina('usuario')" id="nav-usuario">Área do Usuário</a></li>
+                    <li><a onclick="mudarPagina('contato')" id="nav-contato">Contatos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section id="home" class="page-section active-page">
+            <div class="hero">
+                <h2>Conectando a Sociedade aos Pequenos Produtores</h2>
+                <p>Compre direto de quem planta. Apoie a agricultura local e leve saúde para sua mesa.</p>
+            </div>
+
+            <h2 style="color: #2e7d32; text-align: center; margin-bottom: 1rem;">Produtos da Nossa Comunidade</h2>
+            
+            <div class="grid-produtos">
+                <div class="card-produto">
+                    <img src="https://images.unsplash.com/photo-1566385208963-f614f41595f4?auto=format&fit=crop&w=400&q=80" alt="Cesta de Legumes">
+                    <div class="card-conteudo">
+                        <h3>Cesta Orgânica Familiar</h3>
+                        <p>Legumes e verduras variados, colhidos no dia da entrega.</p>
+                        <div class="preco">R$ 45,00</div>
+                        <button class="btn-comprar" onclick="comprarProduto('Cesta Orgânica')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+                <div class="card-produto">
+                    <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=400&q=80" alt="Cenouras">
+                    <div class="card-conteudo">
+                        <h3>Cenoura Premium (Kg)</h3>
+                        <p>Cultivadas sem pesticidas pela cooperativa local.</p>
+                        <div class="preco">R$ 6,50</div>
+                        <button class="btn-comprar" onclick="comprarProduto('Cenoura Premium')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+                <div class="card-produto">
+                    <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" alt="Mel">
+                    <div class="card-conteudo">
+                        <h3>Mel Puro de Abelha 500g</h3>
+                        <p>Produção artesanal e sustentável da comunidade.</p>
+                        <div class="preco">R$ 28,00</div>
+                        <button class="btn-comprar" onclick="comprarProduto('Mel Puro')">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usuario" class="page-section">
+            <div class="form-container">
+                <h2>Cadastro do Produtor / Comprador</h2>
+                <form id="formUsuario" onsubmit="salvarUsuario(event)">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo / Nome da Fazenda</label>
+                        <input type="text" id="nome" required placeholder="Ex: João da Silva ou Sítio Verde">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo de Perfil</label>
+                        <select id="tipo" style="width: 100%; padding: 0.8rem; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="Comprador">Quero Comprar (Sociedade)</option>
+                            <option value="Produtor">Quero Vender (Agricultor)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" required placeholder="seuemail@exemplo.com">
+                    </div>
+                    <button type="submit" class="btn-enviar">Criar Conta</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contato" class="page-section">
+            <div class="form-container">
+                <h2>Fale com a Administração do Projeto</h2>
+                <p style="margin-bottom: 1.5rem; color: #666;">Dúvidas sobre entregas, parcerias ou suporte ao comércio.</p>
+                <form id="formContato" onsubmit="enviarContato(event)">
+                    <div class="form-group">
+                        <label for="cNome">Nome</label>
+                        <input type="text" id="cNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cMensagem">Mensagem</label>
+                        <textarea id="cMensagem" rows="5" required placeholder="Digite sua dúvida ou proposta de parceria comercial..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-enviar" style="background-color: #f9a825; color: #333;">Enviar Mensagem</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="ia-chat-widget">
+        <div class="ia-header">
+            <div>🤖 AgroIA Assistente</div>
+            <span>Online</span>
+        </div>
+        <div class="ia-messages" id="chatIARespostas">
+            <div class="msg ia">Olá! Sou a AgroIA. Posso te ajudar com preços, dicas de cultivo ou dúvidas sobre o comércio social. O que deseja saber?</div>
+        </div>
+        <div class="ia-input-area">
+            <input type="text" id="iaInput" placeholder="Pergunte algo (ex: 'preço', 'entrega')...">
+            <button onclick="perguntarIA()">Enviar</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AgroComércio Sociedade Sustentável. Cores da terra, futuro de ouro.</p>
+    </footer>
+
+    <script>
+        // 1. Sistema Interativo de Navegação de Páginas (SPA)
+        function mudarPagina(idPagina) {
+            // Esconde todas as seções
+            const secoes = document.querySelectorAll('.page-section');
+            secoes.forEach(secao => secao.classList.remove('active-page'));
+
+            // Remove a classe ativa dos links do menu
+            const links = document.querySelectorAll('nav ul li a');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Mostra a seção desejada e ativa o botão do menu
+            document.getElementById(idPagina).classList.add('active-page');
+            document.getElementById('nav-' + idPagina).classList.add('active');
+        }
+
+        // 2. Simulação de Ações do Comércio
+        function comprarProduto(nomeProduto) {
+            alert(`🛒 ${nomeProduto} foi adicionado ao seu carrinho com sucesso!`);
+        }
+
+        // 3. Processamento de Formulários
+        function salvarUsuario(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const tipo = document.getElementById('tipo').value;
+            alert(`Sucesso! Perfil de ${tipo} (${nome}) cadastrado na nossa comunidade agrícola.`);
+            document.getElementById('formUsuario').reset();
+        }
+
+        function enviarContato(event) {
+            event.preventDefault();
+            alert("Obrigado pelo contato! Nossa equipe responderá em até 24 horas.");
+            document.getElementById('formContato').reset();
+        }
+
+        // 4. Inteligência Artificial Simulada (Respostas Inteligentes com Base em Palavras-chave)
+        function perguntarIA() {
+            const inputField = document.getElementById('iaInput');
+            const pergunta = inputField.value.trim().toLowerCase();
+            if (!pergunta) return;
+
+            const chatBox = document.getElementById('chatIARespostas');
+
+            // Adiciona a mensagem do usuário na tela
+            chatBox.innerHTML += `<div class="
